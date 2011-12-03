@@ -31,7 +31,7 @@ LOCAL_SRC_FILES := \
     android_surface_output_msm72xx.cpp
 endif
 
-LOCAL_CFLAGS := $(PV_CFLAGS_MINUS_VISIBILITY)
+LOCAL_CFLAGS := $(PV_CFLAGS_MINUS_VISIBILITY) -O3 -march=armv6zk -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=softfp
 
 LOCAL_SHARED_LIBRARIES := \
     libutils \

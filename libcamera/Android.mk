@@ -10,7 +10,7 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_CFLAGS:=-fno-short-enums
+LOCAL_CFLAGS:=-fno-short-enums -O3 -march=armv6zk -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=softfp
 LOCAL_CFLAGS+=-DDLOPEN_LIBQCAMERA=$(DLOPEN_LIBQCAMERA)
 
 LOCAL_SRC_FILES:= QualcommCameraHardware.cpp

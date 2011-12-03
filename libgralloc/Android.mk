@@ -29,5 +29,5 @@ LOCAL_SRC_FILES := 	\
 	mapper.cpp
 	
 LOCAL_MODULE := gralloc.msm7k
-LOCAL_CFLAGS:= -DLOG_TAG=\"gralloc\"
+LOCAL_CFLAGS:= -DLOG_TAG=\"gralloc\" -O3 -march=armv6zk -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=softfp -Wall
 include $(BUILD_SHARED_LIBRARY)

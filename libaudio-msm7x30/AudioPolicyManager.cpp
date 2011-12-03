@@ -307,20 +307,20 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
     break;
 
     case STRATEGY_SONIFICATION:
-    case STRATEGY_MEDIA_SONIFICATION:
-
-        // If incall, just select the STRATEGY_PHONE device: The rest of the behavior is handled by
-        // handleIncallSonification().
-        if (mPhoneState == AudioSystem::MODE_IN_CALL) {
-            device = getDeviceForStrategy(STRATEGY_PHONE, false);
-            break;
-        }
         device = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER;
         if (device == 0) {
             LOGE("getDeviceForStrategy() speaker device not found");
         }
         // The second device used for sonification is the same as the device used by media strategy
         // FALL THROUGH
+
+    case STRATEGY_MEDIA_SONIFICATION:
+        // If incall, just select the STRATEGY_PHONE device: The rest of the behavior is handled by
+        // handleIncallSonification().
+        if (isInCall()) {
+            device = getDeviceForStrategy(STRATEGY_PHONE, false);
+            break;
+        }
 
     case STRATEGY_MEDIA: {
         //To route FM stream to speaker when headset is connected, a new switch case is added.
@@ -332,12 +332,6 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
         }
         if (device2 == 0) {
             device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_AUX_DIGITAL;
-        }
-        if (device2 == 0) {
-            device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADPHONE;
-        }
-        if (device2 == 0) {
-            device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADSET;
         }
 #ifdef WITH_A2DP
         if (mA2dpOutput != 0) {
@@ -355,6 +349,12 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
             }
         }
 #endif
+        if (device2 == 0) {
+            device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADPHONE;
+        }
+        if (device2 == 0) {
+            device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADSET;
+        }
         if (device2 == 0) {
             device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER;
         }

@@ -29,7 +29,7 @@ LOCAL_SRC_FILES := \
 endif
 
 
-LOCAL_CFLAGS := $(PV_CFLAGS_MINUS_VISIBILITY)
+LOCAL_CFLAGS := $(PV_CFLAGS_MINUS_VISIBILITY) -O3 -march=armv6zk -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=softfp
 
 LOCAL_C_INCLUDES:= \
         $(TOP)/external/opencore/extern_libs_v2/khronos/openmax/include
